@@ -1,0 +1,15 @@
+{
+    "PhoneInfo": {
+        "n0035MaxWidth": 8639,
+        "n0036MaxHigh": 19199,
+        "nResWidth": 1080,
+        "nResHigh": 2400
+    },
+    "EventBasicPosition": {
+        "CloseGameNotice": [8023, 17177],
+        "CloseConfirmation": [1920, 9613]
+    },
+    "EventDungeonPosition": {
+        "Specificity_F": [2274, 13529]
+    }
+}
