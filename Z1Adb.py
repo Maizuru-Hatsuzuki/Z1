@@ -16,7 +16,7 @@ AF_DEFAULT_TOUCH = [0x5, 0x5]
 PHONEINFO_REDMIK40 = "ArgsRedmiK40"
 
 
-class Z1_AdbHandler():
+class Z1AdbHandler():
     def __init__(self, szPhoneModel) -> None:
         self.tConfig = {}
         self.szPhoneModel = szPhoneModel
@@ -69,14 +69,19 @@ class Z1_AdbHandler():
         if FALSE == nCenterPoint:
             fScreenX = nX * fRateH
             fScreenY = nY * fRateW
-            szCmd = "adb shell input tap {} {}".format(fScreenY, 1080 - fScreenX)
+            szCmd = "adb shell input tap {} {}".format(nY, nX)
         else:
             fScreenX = self.tConfig.get('PhoneInfo').get('nResHigh') / 2
             fScreenY = self.tConfig.get('PhoneInfo').get('nResWidth') / 2
             szCmd = "adb shell input tap {} {}".format(fScreenX, fScreenY)
         
-        os.system(szCmd)
+        self.doAdbCmd(szCmd)
 
+        return
+    
+    def touchXYTransverseNox(self, nX, nY) -> None:
+        szCmd = "adb shell input tap {} {}".format(nX, nY)
+        self.doAdbCmd(szCmd)
         return
 
     def doAdbCmd(self, szCmd) -> None:
@@ -86,12 +91,21 @@ class Z1_AdbHandler():
 
 
 if __name__ == "__main__":
-    adbHandler = Z1_AdbHandler(PHONEINFO_REDMIK40)
+    adbHandler = Z1AdbHandler(PHONEINFO_REDMIK40)
     # adbHandler.startApp(FGO_PACKAGE, FGO_ACTIVITY)
+    # adbHandler.mkdir("/sdcard/z1Caches")
+    # arrszCase = ['loadingComplete.png', 'IndexloadingComplete.png', 'CloseNotify.png', 'fuyuki.png']
+    # while 1:
+    #     adbHandler.getScreencap(str(pathlib.Path("Caches").absolute()))
+    adbHandler.getScreencap(str(pathlib.Path("Caches").absolute()))
+
+    #     time.sleep(3)
     # time.sleep(30)
     # for i in range(2):
     #     adbHandler.touchXYTransverse(0x5, 0x5)
     #     time.sleep(15)
-    # adbHandler.touchXYTransverse(0x0780, 0x258d)
-    # adbHandler.mkdir("/sdcard/z1Caches")
-    adbHandler.getScreencap(str(pathlib.Path("Caches").absolute()))
+    # adbHandler.touchXYTransverse(8023, 17177)
+    # time.sleep(15)
+    # adbHandler.touchXYTransverse(1920, 9613)
+    
+    
