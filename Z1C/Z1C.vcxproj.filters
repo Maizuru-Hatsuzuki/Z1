@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Z1Logic">
+      <UniqueIdentifier>{d687e771-32c0-49d9-aff5-62d85b5a8fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Z1Adb">
+      <UniqueIdentifier>{22cff7af-8e54-4a22-959f-34672357b722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Z1CV">
+      <UniqueIdentifier>{67bd9d5c-d6a3-4679-8886-dde9e6c13dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Z1Logic">
+      <UniqueIdentifier>{09e01feb-bd0e-4d9c-b70d-82f411bac12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\DriverEvents">
+      <UniqueIdentifier>{faf419f9-1ab1-4438-848e-43e4471d8849}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\Include\Z1C.h">
@@ -21,10 +36,39 @@
     <ClInclude Include="..\Classes\Include\Z1_BaseMacro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Include\Z1Adb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Include\Z1Log.h">
+      <Filter>Header Files\Z1Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Include\Z1WinMgr.h">
+      <Filter>Header Files\Z1Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Include\ZDriver.h">
+      <Filter>Header Files\Z1Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\Main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Z1Adb.c">
+      <Filter>Source Files\Z1Adb</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Z1Log.c">
+      <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Z1WinMgr.c">
+      <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ZDriver.c">
+      <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\DriverEvent\BGO.csv">
+      <Filter>Resource Files\DriverEvents</Filter>
+    </None>
   </ItemGroup>
 </Project>

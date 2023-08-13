@@ -20,10 +20,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\Include\Z1_BaseMacro.h" />
+    <ClInclude Include="Classes\Include\Z1Adb.h" />
     <ClInclude Include="Classes\Include\Z1C.h" />
+    <ClInclude Include="Classes\Include\Z1Log.h" />
+    <ClInclude Include="Classes\Include\Z1WinMgr.h" />
+    <ClInclude Include="Classes\Include\ZDriver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\Main.c" />
+    <ClCompile Include="Classes\Z1Adb.c" />
+    <ClCompile Include="Classes\Z1Log.c" />
+    <ClCompile Include="Classes\Z1WinMgr.c" />
+    <ClCompile Include="Classes\ZDriver.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\DriverEvent\BGO.csv" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
