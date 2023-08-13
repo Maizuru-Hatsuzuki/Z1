@@ -1,0 +1,30 @@
+{
+    "Version": 1.0,
+    "CVImgRootPath": "data\\CVImg\\FGO",
+    "DriverEvents": 
+    [
+        {
+            "Event": "onclick index screen.",
+            "CVImg": "ONCLICK_Game"
+        },
+        {
+            "Event": "onclick login ready screen.",
+            "CVImg": "ONCLICK_IndexScreen"
+        },
+        {
+            "Event": "onclick close game notify.",
+            "CVImg": "ONCLICK_CloseNotify"
+        },
+        {
+            "Event": "onclick close game confirmation - 1.",
+            "CVImg": "ONCLICK_CloseConfirmation",
+            "nMaxTesting": 3
+        },
+        {
+            "Event": "onclick close game confirmation - 2.",
+            "CVImg": "ONCLICK_CloseConfirmation",
+            "nMaxTesting": 3
+        }
+    ]
+    
+}

@@ -3,17 +3,9 @@ import os
 import time
 import json
 import pathlib
+from Macro import *
 
 
-''' Macro '''
-TRUE = 1
-FALSE = 0
-# app info.
-FGO_PACKAGE = "com.bilibili.fatego"
-FGO_ACTIVITY = "com.unity3d.player.UnityPlayerNativeActivity"
-AF_DEFAULT_TOUCH = [0x5, 0x5]
-# phone info.
-PHONEINFO_REDMIK40 = "ArgsRedmiK40"
 
 
 class Z1AdbHandler():
@@ -88,7 +80,7 @@ class Z1AdbHandler():
         print(szCmd)
         os.system(szCmd)
 
-
+g_AdbHanlder = Z1AdbHandler(PHONEINFO_REDMIK40)
 
 if __name__ == "__main__":
     adbHandler = Z1AdbHandler(PHONEINFO_REDMIK40)
