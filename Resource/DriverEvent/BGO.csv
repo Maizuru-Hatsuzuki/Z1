@@ -1,2 +1,6 @@
 szEventDesc, szCVImgPath, nMaxTesting
 onclick index screen, ONCLICK_Game, 0
+onclick login ready screen, ONCLICK_IndexScreen, 0
+onclick close game notify, ONCLICK_CloseNotify, 0
+onclick close game confirmation - 1, ONCLICK_CloseConfirmation, 3
+onclick close game confirmation - 2, ONCLICK_CloseConfirmation, 3

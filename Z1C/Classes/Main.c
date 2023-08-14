@@ -3,11 +3,24 @@
 #include "Z1Log.h"
 #include "ZDriver.h"
 
+
+
+
 int main()
 {
-	int nResult = ZTRUE;
-	Z1PRINTF_INFO("Z1 c develop, version: 1.0\n");
-	//nResult = Z1Adb_StartApp(PHONEPACKAGE_BGO, PHONEACTIVITY_BGO);
-	ZdGetDriverEventsCsvFile("G:\\Z1C\\Resource\\DriverEvent\\BGO.csv", NULL);
-	return 1;
+	int nResult = ZFALSE;
+	LPZDRIVER pZDriver = NULL;
+
+	nResult = ZdCreateZDriver(&pZDriver, "G:\\CStudy\\Z1C\\Resource\\DriverEvent\\BGO.csv");
+	Z1_PROCESS_ERROR(nResult);
+	
+	nResult = ZdInitAdb();
+	Z1_PROCESS_ERROR(nResult);
+
+	nResult = ZdDriverDispatch(pZDriver);
+	Z1_PROCESS_ERROR(nResult);
+
+	nResult = ZTRUE;
+Exit0:
+	return nResult;
 }

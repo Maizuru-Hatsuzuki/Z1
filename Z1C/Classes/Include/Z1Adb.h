@@ -12,6 +12,6 @@ ZBOOL Z1Adb_StartApp(const char* cszpAppPackage, const char* cszpAppActivity);
 ZBOOL Z1Adb_Mkdir(const char* cszpPhonePath);
 ZBOOL Z1Adb_PullFile(const char* cszpTargetFile, const char* cszpOutput);
 ZBOOL Z1Adb_GetScreencap();
-ZBOOL Z1Adb_GetPathExists(const char* cszpTargetPath);
+ZBOOL Z1Adb_TouchXY(const int cnX, const int cnY);
 
 #endif

@@ -20,15 +20,10 @@ Exit0:
 	return nResult;
 }
 
-void ZwmTrim(const char* cszpText, char* szpResult)
+void ZwmTrim(char* szpText, char* szpResult)
 {
-	if (NULL == cszpText)
-	{
-		goto Exit0;
-	}
-
-	char* szpTmp = cszpText;
-	int nStrLen = strlen(cszpText);
+	char* szpTmp = szpText;
+	int nStrLen = strlen(szpText);
 
 	// delete right space.
 	while (isspace(szpTmp[nStrLen - 1]))

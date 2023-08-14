@@ -51,7 +51,7 @@ ZBOOL Z1Adb_GetScreencap()
 	ZBOOL nResult = ZFALSE;
 	char arrszCmd[MAX_ADBCMD] = { 0 };
 
-	sprintf_s(arrszCmd, MAX_ADBCMD, "adb shell screencap -p /sdcard/z1Caches/tmp.png");
+	sprintf_s(arrszCmd, MAX_ADBCMD, "adb shell screencap -p %s", ROOTPATH_PHONESCREENCAP);
 	system(arrszCmd);
 	Z1PRINTF_INFO(arrszCmd);
 
@@ -60,18 +60,14 @@ Exit0:
 	return nResult;
 }
 
-ZBOOL Z1Adb_GetPathExists(const char* cszpTargetPath)
+ZBOOL Z1Adb_TouchXY(const int cnX, const int cnY)
 {
 	ZBOOL nResult = ZFALSE;
 	char arrszCmd[MAX_ADBCMD] = { 0 };
-	char arrszResult[MAX_CMDRET] = { 0 };
 
-	/*
-	sprintf_s(arrszCmd, MAX_ADBCMD, "adb shell ls %s", cszpTargetPath);
-	ZSystem(arrszCmd, arrszResult);
+	sprintf_s(arrszCmd, MAX_ADBCMD, "adb shell input tap %d %d", cnX, cnY);
+	system(arrszCmd);
 	Z1PRINTF_INFO(arrszCmd);
-	Z1PRINTF_INFO(arrszResult);
-	*/
 
 	nResult = ZTRUE;
 Exit0:

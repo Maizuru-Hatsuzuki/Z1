@@ -4,6 +4,6 @@
 #include "Z1C.h"
 
 ZBOOL ZSystem(const char* cszpCmd, char* szpResult);
-void ZwmTrim(const char* cszpText, char* szpResult);
+void ZwmTrim(char* szpText, char* szpResult);
 
 #endif // !__Z1WINMGR_H__

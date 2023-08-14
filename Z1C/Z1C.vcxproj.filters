@@ -48,6 +48,9 @@
     <ClInclude Include="Classes\Include\ZDriver.h">
       <Filter>Header Files\Z1Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Include\Z1CV.h">
+      <Filter>Header Files\Z1Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\Main.c">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="Classes\ZDriver.c">
       <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Z1CV.cpp">
+      <Filter>Source Files\Z1CV</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

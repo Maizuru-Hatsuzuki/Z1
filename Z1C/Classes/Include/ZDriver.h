@@ -27,8 +27,10 @@ typedef struct _tDriverEventNode DRIVEREVENT_NODE, * LPDRIVEREVENT_NODE;
 typedef struct _tZDriver ZDRIVER, * LPZDRIVER;
 
 
-void ZdCreateZDriver(LPZDRIVER* ppZDriver);
+ZBOOL ZdCreateZDriver(LPZDRIVER* ppZDriver, const char* cszpDriverFile);
 ZBOOL ZdGetDriverEventsCsvFile(const char* cszpCsvFile, LPZDRIVER pZDriver);
-ZBOOL ZdGetDriverEventsCsvFileNumFields(const char* cszpText, const int cnNum);
+ZBOOL ZdGetDriverEventsCsvFileNumFields(char* szpText, const int cnNum, char* szpRet);
+ZBOOL ZdInitAdb();
+ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver);
 
 #endif // !__ZDRIVER_H__
