@@ -10,6 +10,7 @@
 extern "C" {
 #endif
 	ZBOOL ZcGetCVTargetPosition(const char* cszpCVImgPath, const float fThreshold, int* arrnPosRet, ZBOOL* pnRet);
+	ZBOOL ZcafGetCardColor()
 #ifdef __cplusplus
 }
 #endif

@@ -28,6 +28,9 @@
     <Filter Include="Resource Files\DriverEvents">
       <UniqueIdentifier>{faf419f9-1ab1-4438-848e-43e4471d8849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Z1AF_Logic">
+      <UniqueIdentifier>{0456ee0b-aabd-40d4-a879-392ff7e5e9d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\Include\Z1C.h">

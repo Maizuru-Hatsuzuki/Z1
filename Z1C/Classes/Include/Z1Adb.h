@@ -2,7 +2,8 @@
 #define __Z1ADB_H__
 
 
-#define Z1_ADBTOUCH(nX, nY)
+#define Z1ADB_SCREENPOS_FRIESTHELPWAR_X 130
+#define Z1ADB_SCREENPOS_FRIESTHELPWAR_Y 130
 
 #define PHONEPACKAGE_BGO	"com.bilibili.fatego"
 #define PHONEACTIVITY_BGO	"com.unity3d.player.UnityPlayerNativeActivity"

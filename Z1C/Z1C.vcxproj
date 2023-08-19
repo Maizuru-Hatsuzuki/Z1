@@ -93,10 +93,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>D:\openCV\opencv\build\include\;$(SolutionDir)..\Classes\Include;$(SolutionDir)Classes\Include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\openCV\opencv\build\x64\vc16\bin;D:\openCV\opencv\build\x64\vc16\lib;$(SolutionDir)..\Lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)X64D</TargetName>
+    <OutDir>$(SolutionDir)..\bin64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>D:\openCV\opencv\build\include\;$(SolutionDir)..\Classes\Include;$(SolutionDir)Classes\Include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\openCV\opencv\build\x64\vc16\bin;$(SolutionDir)..\Lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)X64</TargetName>
+    <OutDir>$(SolutionDir)..\bin64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
