@@ -10,11 +10,15 @@ int main()
 {
 	int nResult = ZFALSE;
 	LPZDRIVER pZDriver = NULL;
+	LPDRIVERCONFIG pZDriverConfig = NULL;
+	
+	nResult = ZdGetPhoneProcessConfig(PHONEPROCESSCONFIG_BGO, &pZDriverConfig);
+	Z1_PROCESS_ERROR(nResult);
 
-	nResult = ZdCreateZDriver(&pZDriver, "G:\\CStudy\\Z1C\\Resource\\DriverEvent\\BGO.csv");
+	nResult = ZdCreateZDriver(&pZDriver, pZDriverConfig->szarrDriverEventDirPath);
 	Z1_PROCESS_ERROR(nResult);
 	
-	nResult = ZdInitAdb();
+	nResult = ZdInitAdb(pZDriverConfig);
 	Z1_PROCESS_ERROR(nResult);
 
 	nResult = ZdDriverDispatch(pZDriver);
@@ -22,5 +26,6 @@ int main()
 
 	nResult = ZTRUE;
 Exit0:
+	free(pZDriverConfig);
 	return nResult;
 }

@@ -34,9 +34,11 @@
     <ClCompile Include="Classes\Z1Log.c" />
     <ClCompile Include="Classes\Z1WinMgr.c" />
     <ClCompile Include="Classes\ZDriver.c" />
+    <ClCompile Include="Classes\ZStructFn.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\DriverEvent\BGO.csv" />
+    <None Include="..\Resource\DriverConfig\BGO.ini" />
+    <None Include="..\Resource\DriverEvent\BGO\login.csv" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -7,6 +7,8 @@
 #define MAX_ZPRINTF 1024
 #define MAX_CMDRET 10240
 
+#define ASSERT(Condition) if (!(Condition)) __debugbreak()
+
 #define Z1_PROCESS_SUCCESS(Condition)		\
 do											\
 {											\

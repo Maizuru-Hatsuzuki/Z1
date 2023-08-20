@@ -5,9 +5,6 @@
 #define Z1ADB_SCREENPOS_FRIESTHELPWAR_X 130
 #define Z1ADB_SCREENPOS_FRIESTHELPWAR_Y 130
 
-#define PHONEPACKAGE_BGO	"com.bilibili.fatego"
-#define PHONEACTIVITY_BGO	"com.unity3d.player.UnityPlayerNativeActivity"
-
 
 ZBOOL Z1Adb_StartApp(const char* cszpAppPackage, const char* cszpAppActivity);
 ZBOOL Z1Adb_Mkdir(const char* cszpPhonePath);

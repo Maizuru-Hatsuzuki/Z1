@@ -107,11 +107,60 @@ Exit0:
 	return nRet;
 }
 
-
-ZBOOL ZdInitAdb()
+ZBOOL ZdGetPhoneProcessConfig(const char* cszpProcessConfigPath, LPDRIVERCONFIG* ppDriverConfig)
 {
 	ZBOOL nRet = ZFALSE;
-	Z1Adb_StartApp(PHONEPACKAGE_BGO, PHONEACTIVITY_BGO);
+	char szarrSection[10240] = { 0 };
+	char szarrtmpKv[MAX_PATH] = { 0 };
+	char* szpTok = NULL;
+	DWORD dwFnRet = 0;
+	DWORD dwSplitCount = 0;
+	LPZARRAY pEvent = NULL;
+	LPDRIVERCONFIG pDriverConfig = (LPDRIVERCONFIG)malloc(sizeof(DRIVERCONFIG));
+
+	ZCreateArray(&pEvent, ZSTRING);
+	ASSERT(pDriverConfig && pEvent);
+
+	pDriverConfig->pEventFile = pEvent;
+	pEvent->emType = ZSTRING;
+
+	dwFnRet = GetPrivateProfileStringA("ZDriver", "szDesc", NULL, pDriverConfig->szarrDesc, 128, cszpProcessConfigPath);
+	Z1_PROCESS_SUCCESS(pDriverConfig->szarrDesc == NULL);
+
+	dwFnRet = GetPrivateProfileStringA("ZDriver", "szDriverEventDirPath", NULL, pDriverConfig->szarrDriverEventDirPath, MAX_PATH, cszpProcessConfigPath);
+	Z1_PROCESS_SUCCESS(pDriverConfig->szarrDriverEventDirPath == NULL);
+
+	dwFnRet = GetPrivateProfileStringA("ZDriver", "szarrackage", NULL, pDriverConfig->szarrPackage, MAX_PATH, cszpProcessConfigPath);
+	Z1_PROCESS_SUCCESS(pDriverConfig->szarrPackage == NULL);
+
+	dwFnRet = GetPrivateProfileStringA("ZDriver", "szActivity", NULL, pDriverConfig->szarrActivity, MAX_PATH, cszpProcessConfigPath);
+	Z1_PROCESS_SUCCESS(pDriverConfig->szarrActivity == NULL);
+
+	dwFnRet = GetPrivateProfileSectionA("Event", szarrSection, 1024, cszpProcessConfigPath);
+	Z1_PROCESS_SUCCESS(szarrSection == NULL);
+	
+	pEvent->append((void*)pEvent, (void*)szarrSection);
+	dwSplitCount = strlen(szarrSection) + 1;
+	
+	while (dwFnRet > dwSplitCount)
+	{
+		strcpy_s(szarrtmpKv, szarrSection + strlen(szarrSection) + 1);
+		pEvent->append((void*)pEvent, (void*)szarrtmpKv);
+		dwSplitCount += strlen(szarrtmpKv) + 1;
+	}
+
+	pDriverConfig->pEventFile = pEvent;
+	*ppDriverConfig = pDriverConfig;
+	nRet = ZTRUE;
+
+Exit0:
+	return nRet;
+}
+
+ZBOOL ZdInitAdb(LPDRIVERCONFIG pDriverConfig)
+{
+	ZBOOL nRet = ZFALSE;
+	Z1Adb_StartApp(pDriverConfig->szarrPackage, pDriverConfig->szarrActivity);
 	Z1Adb_Mkdir("/sdcard/z1Caches");
 
 	nRet = ZTRUE;
@@ -124,6 +173,7 @@ ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver)
 	ZBOOL nRet = ZFALSE;
 	ZBOOL nCVRet = ZFALSE;
 	int arrnCVPosXY[2] = { 0, 0 };
+	int nTestingCount = 0;
 	LPZDRIVER pTmpZdriver = pZdriver->ptNext;
 
 	while (NULL != pTmpZdriver->ptNext)
@@ -143,10 +193,18 @@ ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver)
 			Z1_PROCESS_ERROR(nRet);
 
 			pTmpZdriver = pTmpZdriver->ptNext;
+			nTestingCount = 0;
 		}
-		else
+		else {}
+
+		if (0 != pTmpZdriver->ptEvent->nMaxTesting && nTestingCount > pTmpZdriver->ptEvent->nMaxTesting)
 		{
+			pTmpZdriver = pTmpZdriver->ptNext;
+			nTestingCount = 0;
 		}
+		else {}
+
+		nTestingCount++;
 		Sleep(5 * 1000);
 	}
 

@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Z1AF_Logic">
       <UniqueIdentifier>{0456ee0b-aabd-40d4-a879-392ff7e5e9d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\DriverConfig">
+      <UniqueIdentifier>{7fbb67a3-473b-4ad6-865b-3baa3c0ff516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\DriverEvents\BGO">
+      <UniqueIdentifier>{14178101-9a91-498c-9226-f0174aceb448}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\Include\Z1C.h">
@@ -74,10 +80,16 @@
     <ClCompile Include="Classes\Z1CV.cpp">
       <Filter>Source Files\Z1CV</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\ZStructFn.c">
+      <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\DriverEvent\BGO.csv">
-      <Filter>Resource Files\DriverEvents</Filter>
+    <None Include="..\Resource\DriverConfig\BGO.ini">
+      <Filter>Resource Files\DriverConfig</Filter>
+    </None>
+    <None Include="..\Resource\DriverEvent\BGO\login.csv">
+      <Filter>Resource Files\DriverEvents\BGO</Filter>
     </None>
   </ItemGroup>
 </Project>
