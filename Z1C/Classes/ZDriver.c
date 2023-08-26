@@ -6,10 +6,13 @@
 #include "Z1CV.h"
 
 
-ZBOOL ZdCreateZDriver(LPZDRIVER* ppZDriver, const char* cszpDriverFile)
+ZBOOL ZdCreateZDriver(LPZDRIVER* ppZDriver, LPDRIVERCONFIG pDriverFileConfig)
 {
-	ZBOOL nRet = ZFALSE;
-	LPZDRIVER pZDriver = (LPZDRIVER)malloc(sizeof(ZDRIVER));
+	ZBOOL nRet							= ZFALSE;
+	char szarrEventFilePath[MAX_PATH]	= { 0 };
+	void* vpEventFilename				= NULL;
+	LPZDRIVER pZDriver					= (LPZDRIVER)malloc(sizeof(ZDRIVER));
+
 	if (NULL == pZDriver)
 	{
 		__debugbreak();
@@ -17,8 +20,15 @@ ZBOOL ZdCreateZDriver(LPZDRIVER* ppZDriver, const char* cszpDriverFile)
 	pZDriver->ptEvent = NULL;
 	pZDriver->ptNext = NULL;
 
-	nRet = ZdGetDriverEventsCsvFile(cszpDriverFile, pZDriver);
-	Z1_PROCESS_ERROR(nRet)
+	for (size_t i = 0; i < pDriverFileConfig->pEventFile->unCount; i++)
+	{
+		pDriverFileConfig->pEventFile->findPos(pDriverFileConfig->pEventFile, i, &vpEventFilename);
+		Z1_PROCESS_ERROR(vpEventFilename);
+
+		sprintf_s(szarrEventFilePath, MAX_PATH, "%s\\%s", pDriverFileConfig->szarrDriverEventDirPath, (char*)vpEventFilename);
+		nRet = ZdGetDriverEventsCsvFile(szarrEventFilePath, pZDriver);
+		Z1_PROCESS_ERROR(nRet);
+	}
 
 	*ppZDriver = pZDriver;
 
@@ -31,7 +41,7 @@ ZBOOL ZdGetDriverEventsCsvFile(const char* cszpCsvFile, LPZDRIVER pZDriver)
 {
 	ZBOOL nRet = ZFALSE;
 	int nCount = 0;
-	char arrszRow[MAX_ZPRINTF] = { 0 };
+	char szarrRow[MAX_ZPRINTF] = { 0 };
 	char szpTmp[MAX_ZPRINTF] = { 0 };
 	char* szpPtr = NULL;
 	FILE* pFile = NULL;
@@ -42,7 +52,7 @@ ZBOOL ZdGetDriverEventsCsvFile(const char* cszpCsvFile, LPZDRIVER pZDriver)
 	fopen_s(&pFile, cszpCsvFile, "r");
 	Z1_PROCESS_ERROR(pFile);
 
-	while (fgets(arrszRow, MAX_ZPRINTF, pFile))
+	while (fgets(szarrRow, MAX_ZPRINTF, pFile))
 	{
 		if (0 != nCount)
 		{
@@ -51,13 +61,13 @@ ZBOOL ZdGetDriverEventsCsvFile(const char* cszpCsvFile, LPZDRIVER pZDriver)
 			ptNode = (LPDRIVEREVENT_NODE)malloc(sizeof(DRIVEREVENT_NODE));
 			Z1_PROCESS_ERROR(ptNode);
 
-			ZdGetDriverEventsCsvFileNumFields(_strdup(arrszRow), 1, szpTmp);
+			ZdGetDriverEventsCsvFileNumFields(_strdup(szarrRow), 1, szpTmp);
 			strcpy_s(ptNode->arrszEventDesc, strlen(szpTmp) + 1, szpTmp);
 
-			ZdGetDriverEventsCsvFileNumFields(_strdup(arrszRow), 2, szpTmp);
+			ZdGetDriverEventsCsvFileNumFields(_strdup(szarrRow), 2, szpTmp);
 			strcpy_s(ptNode->arrszCVImgPath, strlen(szpTmp) + 1, szpTmp);
 
-			ZdGetDriverEventsCsvFileNumFields(_strdup(arrszRow), 3, szpTmp);
+			ZdGetDriverEventsCsvFileNumFields(_strdup(szarrRow), 3, szpTmp);
 			if (NULL == szpTmp)
 			{
 				ptNode->nMaxTesting = 0;
@@ -110,6 +120,7 @@ Exit0:
 ZBOOL ZdGetPhoneProcessConfig(const char* cszpProcessConfigPath, LPDRIVERCONFIG* ppDriverConfig)
 {
 	ZBOOL nRet = ZFALSE;
+	const short csMaxEventFieldNum = 10;
 	char szarrSection[10240] = { 0 };
 	char szarrtmpKv[MAX_PATH] = { 0 };
 	char* szpTok = NULL;
@@ -130,7 +141,7 @@ ZBOOL ZdGetPhoneProcessConfig(const char* cszpProcessConfigPath, LPDRIVERCONFIG*
 	dwFnRet = GetPrivateProfileStringA("ZDriver", "szDriverEventDirPath", NULL, pDriverConfig->szarrDriverEventDirPath, MAX_PATH, cszpProcessConfigPath);
 	Z1_PROCESS_SUCCESS(pDriverConfig->szarrDriverEventDirPath == NULL);
 
-	dwFnRet = GetPrivateProfileStringA("ZDriver", "szarrackage", NULL, pDriverConfig->szarrPackage, MAX_PATH, cszpProcessConfigPath);
+	dwFnRet = GetPrivateProfileStringA("ZDriver", "szPackage", NULL, pDriverConfig->szarrPackage, MAX_PATH, cszpProcessConfigPath);
 	Z1_PROCESS_SUCCESS(pDriverConfig->szarrPackage == NULL);
 
 	dwFnRet = GetPrivateProfileStringA("ZDriver", "szActivity", NULL, pDriverConfig->szarrActivity, MAX_PATH, cszpProcessConfigPath);
@@ -139,14 +150,18 @@ ZBOOL ZdGetPhoneProcessConfig(const char* cszpProcessConfigPath, LPDRIVERCONFIG*
 	dwFnRet = GetPrivateProfileSectionA("Event", szarrSection, 1024, cszpProcessConfigPath);
 	Z1_PROCESS_SUCCESS(szarrSection == NULL);
 	
-	pEvent->append((void*)pEvent, (void*)szarrSection);
+	strcpy_s(szarrtmpKv, szarrSection);
 	dwSplitCount = strlen(szarrSection) + 1;
+	szarrtmpKv[strlen(szarrtmpKv) - 1] = '\0';
+	pEvent->append((void*)pEvent, (void*)(szarrtmpKv + csMaxEventFieldNum), dwSplitCount);
 	
 	while (dwFnRet > dwSplitCount)
 	{
-		strcpy_s(szarrtmpKv, szarrSection + strlen(szarrSection) + 1);
-		pEvent->append((void*)pEvent, (void*)szarrtmpKv);
-		dwSplitCount += strlen(szarrtmpKv) + 1;
+		strcpy_s(szarrtmpKv, szarrSection + dwSplitCount);
+		dwSplitCount = dwSplitCount + strlen(szarrtmpKv) + 1;
+		szarrtmpKv[strlen(szarrtmpKv) - 1] = '\0';
+
+		pEvent->append((void*)pEvent, (void*)(szarrtmpKv + csMaxEventFieldNum), strlen(szarrtmpKv) + 1);
 	}
 
 	pDriverConfig->pEventFile = pEvent;
@@ -160,10 +175,10 @@ Exit0:
 ZBOOL ZdInitAdb(LPDRIVERCONFIG pDriverConfig)
 {
 	ZBOOL nRet = ZFALSE;
+	system("adb devices");
 	Z1Adb_StartApp(pDriverConfig->szarrPackage, pDriverConfig->szarrActivity);
 	Z1Adb_Mkdir("/sdcard/z1Caches");
 
-	ZDeleteArray(pDriverConfig->pEventFile);
 	nRet = ZTRUE;
 Exit0:
 	return nRet;

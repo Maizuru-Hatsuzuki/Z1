@@ -5,7 +5,6 @@
 
 
 
-
 int main()
 {
 	int nResult = ZFALSE;
@@ -15,7 +14,7 @@ int main()
 	nResult = ZdGetPhoneProcessConfig(PHONEPROCESSCONFIG_BGO, &pZDriverConfig);
 	Z1_PROCESS_ERROR(nResult);
 
-	nResult = ZdCreateZDriver(&pZDriver, pZDriverConfig->szarrDriverEventDirPath);
+	nResult = ZdCreateZDriver(&pZDriver, pZDriverConfig);
 	Z1_PROCESS_ERROR(nResult);
 	
 	nResult = ZdInitAdb(pZDriverConfig);
@@ -26,6 +25,7 @@ int main()
 
 	nResult = ZTRUE;
 Exit0:
-	free(pZDriverConfig);
+	free(pZDriver);
+	ZDeleteArray(pZDriverConfig->pEventFile);
 	return nResult;
 }

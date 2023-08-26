@@ -15,8 +15,8 @@
 #define ROOTPATH_PHONESCREENCAP		"/sdcard/z1Caches/zScreencap.png"
 
 
-typedef void (*ZArrayCreate)(void* pArray, void* vpData);
-
+typedef void (*ZArrayCreate)(void* pArray, void* vpData, const int cnSize);
+typedef void (*ZArrayFindCount)(void* pArray, const int cnPos, void** ppvData);
 
 enum ZARRAYTYPE
 {
@@ -37,13 +37,15 @@ struct _tZArray
 	struct _tZArray* ptTailNode;
 	struct _tZArray* ptNext;
 	ZArrayCreate append;
+	ZArrayFindCount findPos;
 };
 
 typedef struct _tZArray ZARRAY, * LPZARRAY;
 
 void ZCreateArray(LPZARRAY* ppArray, ZARRAYTYPE emType);
-void ZCreateArrayNextNode(void* pArray, void* vpData);
+void ZCreateArrayNextNode(void* pArray, void* vpData, const int cnSize);
 void ZCreateArrayFn(LPZARRAY pArray);
+void ZFindData(void* pArray, const int cnPos, void** ppvData);
 void ZDeleteArray(LPZARRAY pArray);
 void ZDeleteArrayNode(void* pArray);
 
