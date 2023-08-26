@@ -46,3 +46,29 @@ void ZCreateArrayFn(LPZARRAY pArray)
 
 	return;
 }
+
+void ZDeleteArray(LPZARRAY pArray)
+{
+	LPZARRAY ptmpArr = pArray;
+	LPZARRAY ptmpNode = NULL;
+	ptmpArr = ptmpArr->ptNext;
+
+	Z1_PROCESS_SUCCESS(0 == pArray->unCount);
+
+	while (NULL != ptmpArr->ptNext && ptmpArr != pArray->ptHeadNode)
+	{
+		ptmpNode = ptmpArr;
+		ptmpArr = ptmpArr->ptNext;
+
+		Z1_RELEASE(ptmpNode);
+	}
+
+Exit0:
+	Z1_RELEASE(pArray);
+	return;
+}
+
+void ZDeleteArrayNode(void* pArray)
+{
+
+}

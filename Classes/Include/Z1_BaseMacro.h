@@ -8,6 +8,7 @@
 #define MAX_CMDRET 10240
 
 #define ASSERT(Condition) if (!(Condition)) __debugbreak()
+#define Z1_RELEASE(p) { if (p) { free(p); (p) = NULL; } }
 
 #define Z1_PROCESS_SUCCESS(Condition)		\
 do											\

@@ -163,6 +163,7 @@ ZBOOL ZdInitAdb(LPDRIVERCONFIG pDriverConfig)
 	Z1Adb_StartApp(pDriverConfig->szarrPackage, pDriverConfig->szarrActivity);
 	Z1Adb_Mkdir("/sdcard/z1Caches");
 
+	ZDeleteArray(pDriverConfig->pEventFile);
 	nRet = ZTRUE;
 Exit0:
 	return nRet;

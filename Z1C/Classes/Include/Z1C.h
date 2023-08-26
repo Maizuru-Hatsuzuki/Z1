@@ -44,6 +44,7 @@ typedef struct _tZArray ZARRAY, * LPZARRAY;
 void ZCreateArray(LPZARRAY* ppArray, ZARRAYTYPE emType);
 void ZCreateArrayNextNode(void* pArray, void* vpData);
 void ZCreateArrayFn(LPZARRAY pArray);
-
+void ZDeleteArray(LPZARRAY pArray);
+void ZDeleteArrayNode(void* pArray);
 
 #endif // __Z1C_H__
