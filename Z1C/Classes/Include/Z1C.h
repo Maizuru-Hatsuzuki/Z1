@@ -28,6 +28,11 @@ enum ZARRAYTYPE
 	ZSTRING,
 };
 
+enum ZSUPPORT_CLEINT
+{
+	ZSUPPORT_CLIENT_BGO = 1,
+};
+
 struct _tZArray
 {
 	unsigned int unCount;

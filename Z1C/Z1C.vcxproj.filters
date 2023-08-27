@@ -37,6 +37,9 @@
     <Filter Include="Resource Files\DriverEvents\BGO">
       <UniqueIdentifier>{14178101-9a91-498c-9226-f0174aceb448}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Z1AF">
+      <UniqueIdentifier>{7b945124-955e-4e69-9244-f79eb54a4b41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\Include\Z1C.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="Classes\Include\Z1CV.h">
       <Filter>Header Files\Z1Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Include\Z1AF.h">
+      <Filter>Header Files\Z1AF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\Main.c">
@@ -82,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="Classes\ZStructFn.c">
       <Filter>Source Files\Z1Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Z1AF_EventMgr.c">
+      <Filter>Source Files\Z1AF_Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

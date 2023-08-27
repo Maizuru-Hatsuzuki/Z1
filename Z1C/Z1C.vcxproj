@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\Classes\Include\Z1_BaseMacro.h" />
     <ClInclude Include="Classes\Include\Z1Adb.h" />
+    <ClInclude Include="Classes\Include\Z1AF.h" />
     <ClInclude Include="Classes\Include\Z1C.h" />
     <ClInclude Include="Classes\Include\Z1CV.h" />
     <ClInclude Include="Classes\Include\Z1Log.h" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClCompile Include="Classes\Main.c" />
     <ClCompile Include="Classes\Z1Adb.c" />
+    <ClCompile Include="Classes\Z1AF_EventMgr.c" />
     <ClCompile Include="Classes\Z1CV.cpp" />
     <ClCompile Include="Classes\Z1Log.c" />
     <ClCompile Include="Classes\Z1WinMgr.c" />

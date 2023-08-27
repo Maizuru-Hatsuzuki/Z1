@@ -4,6 +4,7 @@
 #include "Z1Log.h"
 #include "Z1Adb.h"
 #include "Z1CV.h"
+#include "Z1AF.h"
 
 
 ZBOOL ZdCreateZDriver(LPZDRIVER* ppZDriver, LPDRIVERCONFIG pDriverFileConfig)
@@ -184,41 +185,91 @@ Exit0:
 	return nRet;
 }
 
-ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver)
+ZBOOL ZdDoTouch(const char* cszpCVTargetImg, ZBOOL* pnRet)
 {
 	ZBOOL nRet = ZFALSE;
 	ZBOOL nCVRet = ZFALSE;
+	int narrPosRes[2] = { 0, 0 };
+
+	nRet = Z1Adb_GetScreencap();
+	Z1_PROCESS_ERROR(nRet);
+
+	nRet = Z1Adb_PullFile(ROOTPATH_PHONESCREENCAP, ROOTPATH_CVIMG_TARGET);
+	Z1_PROCESS_ERROR(nRet);
+
+	nRet = ZcGetCVTargetPosition(cszpCVTargetImg, 0.8f, narrPosRes, &nCVRet);
+	Z1_PROCESS_ERROR(nRet);
+
+	if (ZFALSE != nCVRet)
+	{
+		nRet = Z1Adb_TouchXY(narrPosRes[0], narrPosRes[1]);
+		Z1_PROCESS_ERROR(nRet);
+		Z1PRINTF_INFO("Touch event: %s", cszpCVTargetImg);
+
+		*pnRet = ZTRUE;
+	}
+	else { *pnRet = ZFALSE; }
+
+	nRet = ZTRUE;
+Exit0:
+	return nRet;
+}
+
+ZBOOL ZdDoBasicEvent(const char** cszppBasicEvent, const int cnMaxBasicEventLen)
+{
+	ZBOOL nRet = ZFALSE;
+	ZBOOL nTouchRet = ZFALSE;
+	int narrPosRes[2] = { 0, 0 };
+
+	for (size_t i = 0; i < cnMaxBasicEventLen; i++)
+	{
+		nRet = ZdDoTouch(*(cszppBasicEvent + i), &nTouchRet);
+		Z1_PROCESS_ERROR(nRet);
+	}
+
+	nRet = ZTRUE;
+Exit0:
+	return nRet;
+}
+
+ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver, enum ZSUPPORT_CLEINT emClient)
+{
+	ZBOOL nRet = ZFALSE;
+	ZBOOL nTouchRet = ZFALSE;
 	int arrnCVPosXY[2] = { 0, 0 };
 	int nTestingCount = 0;
 	LPZDRIVER pTmpZdriver = pZdriver->ptNext;
 
 	while (NULL != pTmpZdriver->ptNext)
 	{
-		nRet = Z1Adb_GetScreencap();
-		Z1_PROCESS_ERROR(nRet);
-
-		nRet = Z1Adb_PullFile(ROOTPATH_PHONESCREENCAP, ROOTPATH_CVIMG_TARGET);
-		Z1_PROCESS_ERROR(nRet);
-
-		nRet = ZcGetCVTargetPosition(pTmpZdriver->ptEvent->arrszCVImgPath, 0.8f, arrnCVPosXY, &nCVRet);
-		Z1_PROCESS_ERROR(nRet);
-
-		if (ZFALSE != nCVRet)
+		// do basic test case check.
+		switch (emClient)
 		{
-			nRet = Z1Adb_TouchXY(arrnCVPosXY[0], arrnCVPosXY[1]);
+		case ZSUPPORT_CLIENT_BGO:
+			nRet = ZafGetBasicEvent();
 			Z1_PROCESS_ERROR(nRet);
+			break;
 
-			pTmpZdriver = pTmpZdriver->ptNext;
-			nTestingCount = 0;
+		default:
+			break;
 		}
-		else {}
 
-		if (0 != pTmpZdriver->ptEvent->nMaxTesting && nTestingCount > pTmpZdriver->ptEvent->nMaxTesting)
-		{
-			pTmpZdriver = pTmpZdriver->ptNext;
-			nTestingCount = 0;
-		}
-		else {}
+		// do pTmpZdriver(.csv) test case check.
+		//nRet = ZdDoTouch(pTmpZdriver->ptEvent->arrszCVImgPath, &nTouchRet);
+		//Z1_PROCESS_ERROR(nRet);
+		//if (ZFALSE != nTouchRet)
+		//{
+		//	pTmpZdriver = pTmpZdriver->ptNext;
+		//	nTestingCount = 0;
+		//}
+		//else {}
+
+		//if (0 != pTmpZdriver->ptEvent->nMaxTesting && nTestingCount > pTmpZdriver->ptEvent->nMaxTesting)
+		//{
+		//	pTmpZdriver = pTmpZdriver->ptNext;
+		//	nTestingCount = 0;
+		//}
+		//else {}
 
 		nTestingCount++;
 		Sleep(5 * 1000);

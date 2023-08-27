@@ -1,5 +1,6 @@
 #include "Z1C.h"
 
+
 void ZCreateArray(LPZARRAY* ppArray, ZARRAYTYPE emType)
 {
 	LPZARRAY pArrayNode = (LPZARRAY)malloc(sizeof(ZARRAY));

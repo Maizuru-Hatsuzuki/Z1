@@ -20,7 +20,7 @@ int main()
 	nResult = ZdInitAdb(pZDriverConfig);
 	Z1_PROCESS_ERROR(nResult);
 
-	nResult = ZdDriverDispatch(pZDriver);
+	nResult = ZdDriverDispatch(pZDriver, ZSUPPORT_CLIENT_BGO);
 	Z1_PROCESS_ERROR(nResult);
 
 	nResult = ZTRUE;

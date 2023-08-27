@@ -46,6 +46,8 @@ ZBOOL ZdGetDriverEventsCsvFile(const char* cszpCsvFile, LPZDRIVER pZDriver);
 ZBOOL ZdGetDriverEventsCsvFileNumFields(char* szpText, const int cnNum, char* szpRet);
 ZBOOL ZdGetPhoneProcessConfig(const char* cszpProcessConfigPath, LPDRIVERCONFIG* ppDriverConfig);
 ZBOOL ZdInitAdb(LPDRIVERCONFIG pDriverConfig);
-ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver);
+ZBOOL ZdDoTouch(const char* cszpCVTargetImg, ZBOOL* pnRet);
+ZBOOL ZdDoBasicEvent(const char** cszppBasicEvent, const int cnMaxBasicEventLen);
+ZBOOL ZdDriverDispatch(LPZDRIVER pZdriver, enum ZSUPPORT_CLEINT emClient);
 
 #endif // !__ZDRIVER_H__

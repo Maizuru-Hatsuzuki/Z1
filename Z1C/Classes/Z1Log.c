@@ -1,6 +1,7 @@
 #include "Z1C.h"
 #include "Z1Log.h"
 
+
 void Z1Printf(const short csFlags, const char* cszpText, ...)
 {
 	char szarrTmp[MAX_ZPRINTF] = { 0 };
